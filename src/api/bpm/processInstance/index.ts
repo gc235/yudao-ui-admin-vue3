@@ -61,11 +61,11 @@ export const getProcessInstanceManagerPage = async (params: any) => {
   return await request.get({ url: '/bpm/process-instance/manager-page', params })
 }
 
-export const createProcessInstance = async (data) => {
+export const createProcessInstance = async (data: any) => {
   return await request.post({ url: '/bpm/process-instance/create', data: data })
 }
 
-export const cancelProcessInstanceByStartUser = async (id: number, reason: string) => {
+export const cancelProcessInstanceByStartUser = async (id: string | number, reason: string) => {
   const data = {
     id: id,
     reason: reason
@@ -73,7 +73,7 @@ export const cancelProcessInstanceByStartUser = async (id: number, reason: strin
   return await request.delete({ url: '/bpm/process-instance/cancel-by-start-user', data: data })
 }
 
-export const cancelProcessInstanceByAdmin = async (id: number, reason: string) => {
+export const cancelProcessInstanceByAdmin = async (id: string | number, reason: string) => {
   const data = {
     id: id,
     reason: reason

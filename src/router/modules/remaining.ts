@@ -277,7 +277,7 @@ const remainingRouter: AppRouteRecordRaw[] = [
           title: '流程详情',
           activeMenu: '/bpm/task/my'
         },
-        props: (route) => ({
+        props: (route: any) => ({
           id: route.query.id,
           taskId: route.query.taskId,
           activityId: route.query.activityId
@@ -317,6 +317,30 @@ const remainingRouter: AppRouteRecordRaw[] = [
           canTo: true,
           title: '查看 OA 请假',
           activeMenu: '/bpm/oa/leave'
+        }
+      },
+      {
+        path: 'quality-review/create',
+        component: () => import('@/views/bpm/quality-review/create.vue'),
+        name: 'QualityReviewCreate',
+        meta: {
+          noCache: true,
+          hidden: true,
+          canTo: true,
+          title: '发起质检审核',
+          activeMenu: '/bpm/quality-review'
+        }
+      },
+      {
+        path: 'quality-review/detail',
+        component: () => import('@/views/bpm/quality-review/detail.vue'),
+        name: 'QualityReviewDetail',
+        meta: {
+          noCache: true,
+          hidden: true,
+          canTo: true,
+          title: '查看质检审核',
+          activeMenu: '/bpm/quality-review'
         }
       },
       {
