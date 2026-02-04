@@ -62,17 +62,6 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="定位类型" prop="locationType">
-        <el-radio-group v-model="formData.locationType" :disabled="formType === 'update'">
-          <el-radio
-            v-for="dict in getIntDictOptions(DICT_TYPE.IOT_LOCATION_TYPE)"
-            :key="dict.value"
-            :label="dict.value"
-          >
-            {{ dict.label }}
-          </el-radio>
-        </el-radio-group>
-      </el-form-item>
       <el-form-item label="数据格式" prop="codecType">
         <el-radio-group v-model="formData.codecType" :disabled="formType === 'update'">
           <el-radio
@@ -86,6 +75,20 @@
       </el-form-item>
       <el-collapse>
         <el-collapse-item title="更多配置">
+          <el-form-item label="动态注册" prop="registerEnabled">
+            <template #label>
+              <el-tooltip
+                content="设备动态注册无需一一烧录设备证书（DeviceSecret），每台设备烧录相同的产品证书，即 ProductKey 和 ProductSecret ，云端鉴权通过后下发设备证书，您可以根据需要开启或关闭动态注册，保障安全性。"
+                placement="top"
+              >
+                <span>
+                  动态注册
+                  <Icon icon="ep:question-filled" class="ml-2px" />
+                </span>
+              </el-tooltip>
+            </template>
+            <el-switch v-model="formData.registerEnabled" />
+          </el-form-item>
           <el-form-item label="产品图标" prop="icon">
             <UploadImg v-model="formData.icon" :height="'80px'" :width="'80px'" />
           </el-form-item>
@@ -130,16 +133,15 @@ const formData = ref({
   picUrl: undefined,
   description: undefined,
   deviceType: undefined,
-  locationType: undefined,
   netType: undefined,
-  codecType: CodecTypeEnum.ALINK
+  codecType: CodecTypeEnum.ALINK,
+  registerEnabled: false
 })
 const formRules = reactive({
   productKey: [{ required: true, message: 'ProductKey 不能为空', trigger: 'blur' }],
   name: [{ required: true, message: '产品名称不能为空', trigger: 'blur' }],
   categoryId: [{ required: true, message: '产品分类不能为空', trigger: 'change' }],
   deviceType: [{ required: true, message: '设备类型不能为空', trigger: 'change' }],
-  locationType: [{ required: true, message: '定位类型不能为空', trigger: 'change' }],
   netType: [
     {
       required: true,
@@ -206,9 +208,9 @@ const resetForm = () => {
     picUrl: undefined,
     description: undefined,
     deviceType: undefined,
-    locationType: undefined,
     netType: undefined,
-    codecType: CodecTypeEnum.ALINK
+    codecType: CodecTypeEnum.ALINK,
+    registerEnabled: false
   }
   formRef.value?.resetFields()
 }
